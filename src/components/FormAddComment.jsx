@@ -1,26 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from "axios"
 
-export default function FormAddComment() {
-    const [text, setText] = useState()
-    //let textoGuardado = ""
+export default function FormAddComment(props) {
+  const [newComment, setNewComment] = useState("")
+  const {getWatchList, movieId} = props
 
-    const handleComment = (e) => {
-        e.preventDefault()
-        setText(e.target.value)
+  const handleValueComment = (e) => {
+    setNewComment(e.target.value)
+  }
 
-    }
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+      try {
+        await axios.patch(`http://localhost:5005/movies/${movieId}`, {"comment": newComment})
 
-    const handleAddComment = (e) => {
-        e.preventDefault()
-       // textoGuardado = text
-        setText("")
-        //necesitamos guardar el texto cuando se le de al botón para enviarselo al div de watchList
-    }
+        getWatchList()
+        setNewComment("");
+      } catch (error) {
+        console.log(error)
+      }
+  
+    
+  }
+   
 
   return (
     <div>
         <label htmlFor="myTextArea">Write your comment here: </label>
-        <textarea name="" id=""  onChange={handleComment} value={text}></textarea>
+        <textarea name="" id=""  onChange={handleValueComment} value={newComment}></textarea>
         <button onClick={handleAddComment}>Add</button>
     </div>
     

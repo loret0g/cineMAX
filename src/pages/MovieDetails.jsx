@@ -39,7 +39,8 @@ function MovieDetails() {
       title: movie.title,
       backdrop_path: movie.backdrop_path,
       overview: movie.overview,
-      genres: movie.genres.map(genre => genre.name) 
+      genres: movie.genres.map(genre => genre.name),
+      watched: false
     };
 
     createMovie(movieData)
