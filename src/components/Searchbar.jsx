@@ -1,15 +1,22 @@
-function Searchbar() {
+function Searchbar(props) {
+  const { searchTerm, handleSearchTermChange } = props;
+
   return (
     <div>
-      <label htmlFor="">Buscar</label>
-      <input type="text" /> 
-      <button>🔍</button>
+      <label htmlFor="search">Buscar</label>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => handleSearchTermChange(e.target.value)} 
+        id="search"
+      />
+      {/* <button onClick={handleSearch}>🔍</button> */}
 
-      <select name="" id="">
+      <select id="genre-select">
         <option value="">Diferentes géneros</option>
       </select>
     </div>
-  )
+  );
 }
 
-export default Searchbar
+export default Searchbar;

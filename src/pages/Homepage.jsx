@@ -4,8 +4,8 @@ import axios from "axios"
 import Searchbar from "../components/Searchbar";
 
 function Homepage() {
-
-  const [movies, setMovies] = useState(null);
+  const [allMovies, setMovies] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(""); 
 
   useEffect(() => {
     getMovies();
@@ -28,11 +28,14 @@ function Homepage() {
 
   return (
     <div id="homepage">Homepage
-
-    <Searchbar/>
+      <Searchbar searchTerm={searchTerm} handleSearchTermChange={setSearchTerm}/>
   
-      {movies === null ? (<h3>...Cargando</h3>) :
-        movies.map((eachMovie) => {
+      {allMovies === null ? (<h3>...Cargando</h3>) :
+        allMovies
+        .filter((eachMovie) =>
+          eachMovie.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .map((eachMovie) => {
           return (
             <Link to={`/movie/${eachMovie.id}`} key={eachMovie.id}>
               <div  id="movie-card">
@@ -44,7 +47,6 @@ function Homepage() {
             </Link>
           )
       })}
-
     </div>
   )
 }

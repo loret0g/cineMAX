@@ -28,6 +28,32 @@ function MovieDetails() {
     }
   }
 
+  const [addMovie, setAddMovie] = useState()
+
+  const handleAdd = (e) =>{
+    e.preventDefault()
+    
+    if (!movie) return;
+
+    const movieData = {
+      title: movie.title,
+      backdrop_path: movie.backdrop_path,
+      overview: movie.overview,
+      genres: movie.genres.map(genre => genre.name) 
+    };
+
+    createMovie(movieData)
+  }
+
+  const createMovie = async(movieData) => {
+    try {
+      const response = axios.post("http://localhost:5005/movies", movieData)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
     <div>MovieDetails</div>
@@ -40,7 +66,7 @@ function MovieDetails() {
         <div> 
           <img src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`} alt={movie.imagen} />
           <br></br>
-          <button>Agregar a WatchList</button>
+          <button onClick={handleAdd}>Agregar a WatchList</button>
           <h2>{movie.genres.map((eachMovie, index)=>{
           return (
            
@@ -52,6 +78,7 @@ function MovieDetails() {
           <h1>{movie.title}</h1>
           <p>{movie.overview}</p>
           <h2>{movie.vote_average}</h2>
+          
         </div>
         )
       }

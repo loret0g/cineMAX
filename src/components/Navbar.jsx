@@ -7,7 +7,6 @@ function Navbar() {
     <nav>
       <Link to="/"><button>CineMAX</button></Link>
       <Link to="/watchlist"><button>WatchList</button></Link>
-
     </nav>
     
   )
