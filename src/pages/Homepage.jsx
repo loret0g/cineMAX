@@ -4,7 +4,7 @@ import axios from "axios"
 import Searchbar from "../components/Searchbar";
 
 function Homepage() {
-  const [allMovies, setMovies] = useState(null);
+  const [allMovies, setMovies] = useState();
   const [searchTerm, setSearchTerm] = useState(""); 
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function Homepage() {
     <div id="homepage">Homepage
       <Searchbar searchTerm={searchTerm} handleSearchTermChange={setSearchTerm}/>
   
-      {allMovies === null ? (<h3>...Cargando</h3>) :
+      {allMovies === undefined ? (<h3>...Cargando</h3>) :
         allMovies
         .filter((eachMovie) =>
           eachMovie.title.toLowerCase().includes(searchTerm.toLowerCase())

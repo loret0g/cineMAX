@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
+import FormAddComment from './FormAddComment'
 import axios from "axios"
 
 function WatchList() {
   const [addedMovie, setAddedMovie] = useState()
+  const [comments, setComments] = useState({})
   useEffect(()=>{
     showDate()
 
@@ -29,6 +31,7 @@ function WatchList() {
           <h1>{addedMovie.title}</h1>
           <img src={`http://localhost:5005/movies${eachMovie.backdrop_path}`} alt="imagen-pelicula" />
           <p>{addedMovie.overview}</p>
+          <div></div>
 
           <FormAddComment/>
           
