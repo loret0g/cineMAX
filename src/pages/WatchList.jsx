@@ -1,10 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useParams } from "react"
 import FormAddComment from '../components/FormAddComment'
 import axios from "axios"
 
 function WatchList() {
   const [addedMovie, setAddedMovie] = useState()
-  console.log(addedMovie)
+
+  const [userRating, setUserRating] = useState(0); //  el rating que da el usuario
+  const [stars, setStars] = useState([]); // para almacenar las estrellas
+  const {movieId} = useParams()
+
+  console.log(stars)
   
   useEffect(()=>{
     getWatchList()
@@ -14,7 +19,6 @@ function WatchList() {
   const getWatchList = async () =>{
     try {
       const response = await axios.get("http://localhost:5005/movies")
-      console.log(response.data)
       setAddedMovie(response.data)
       
     } catch (error) {
@@ -33,6 +37,57 @@ function WatchList() {
     }
   }
 
+  const handleAddFav = async(movieId, movieFav) => {
+    try {
+      const updatedFavStatus = !movieFav
+      await axios.patch(`http://localhost:5005/movies/${movieId}`, {liked: updatedFavStatus})
+      getWatchList()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // Función para manejar el clic en las estrellas
+  const handleRatingClick = (rating) => {
+    setUserRating(rating); // Cambia el valor del rating cuando se hace clic
+    updateRatingInDatabase(rating)
+  };
+
+  const renderStars = () => {
+    const starElements = [];
+    for (let i = 1; i <= 5; i++) {
+      starElements.push(
+        <span
+          key={i}
+          onClick={() => handleRatingClick(i)} // Establece el rating cuando haces clic en la estrella
+          style={{
+            color: userRating >= i ? "gold" : "gray",
+            cursor: "pointer",
+            fontSize: "24px",
+          }}
+        >
+          ★
+        </span>
+      );
+    }
+    setStars(starElements); // Almacena las estrellas en el estado
+  };
+
+  useEffect(() => {
+    renderStars(); // Cada vez que el rating cambia, vuelve a renderizar las estrellas
+  }, [userRating]);
+
+  const updateRatingInDatabase = async (rating) => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:5005/movies/${movieId}`,
+        { rating }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   
   return (
     <div>
@@ -42,17 +97,23 @@ function WatchList() {
         <div key={index}>
           <h1>{eachMovie.title}</h1>
           <img src={`https://image.tmdb.org/t/p/w500${eachMovie.backdrop_path}`} alt="imagen-pelicula" />
+          <br />
+          <button onClick={() => handleAddFav(eachMovie.id, eachMovie.liked)}>{eachMovie.liked ? "me gusta" : "agregar a me gusta"}</button>
           <button onClick={() => handleAddWatched(eachMovie.id, eachMovie.watched)}>{eachMovie.watched ? "ICONO VISTO" : "ICONO NO VISTO"}</button>
+          
+          {/* Rating */}
+          <div>
+              <h3>Rate this movie:</h3>
+              
+              <div>{stars}</div>
+
+              <p>Your rating: {userRating} / 5</p>
+          </div>
+          
           <p>{eachMovie.overview}</p>
           <p>Comment: {eachMovie.comment}</p>
-          {/* <div>
-            {comments === undefined ? (<h3>No hay comentarios</h3>) : (
-                // <p>{comments}</p>
-                <p>tu  madre</p>
-              
-            )}
-            
-          </div> */}
+          
+          
 
           <FormAddComment getWatchList={getWatchList} movieId={eachMovie.id}/>
           

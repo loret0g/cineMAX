@@ -11,6 +11,7 @@ function MovieDetails() {
   useEffect (() => {
     
     getMovie()
+    renderStars();
 
   }, [])
 
@@ -40,7 +41,9 @@ function MovieDetails() {
       backdrop_path: movie.backdrop_path,
       overview: movie.overview,
       genres: movie.genres.map(genre => genre.name),
-      watched: false
+      watched: false,
+      liked: false,
+      rating: 0
     };
 
     createMovie(movieData)
@@ -69,16 +72,15 @@ function MovieDetails() {
           <br></br>
           <button onClick={handleAdd}>Agregar a WatchList</button>
           <h2>{movie.genres.map((eachMovie, index)=>{
-          return (
-           
-            <span key={index}>{eachMovie.name}</span>
-          )
-            
-            
+            return (
+              <span key={index}>{eachMovie.name}</span>
+            )
           })}</h2>
           <h1>{movie.title}</h1>
           <p>{movie.overview}</p>
           <h2>{movie.vote_average}</h2>
+
+          
           
         </div>
         )

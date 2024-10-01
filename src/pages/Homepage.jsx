@@ -1,54 +1,135 @@
-import { useEffect, useState} from "react"
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import Searchbar from "../components/Searchbar";
 
 function Homepage() {
   const [allMovies, setMovies] = useState();
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [genre, setGenre] = useState([])        // Saber todos los géneros con llamada a la API
+  const [selectGenre, setSelectGenre] = useState()  // Género que selecciona el usuario
+
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     getMovies();
-  }, [])
+    getGenre()
+  }, []);
 
-  const getMovies = async() => {
+  const getMovies = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/movie/top_rated`, {
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/movie/top_rated`,
+        {
+          params: {
+            api_key: import.meta.env.VITE_API_KEY,
+            // page: 1 // cambiar el número de la página para obtener más resultados
+          },
+        }
+      );
+      setMovies(response.data.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getGenre = async() => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/genre/movie/list`,
+        {
+          params: {
+            api_key: import.meta.env.VITE_API_KEY,
+          },
+        })
+      setGenre(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+    
+  const searchMovies = async () => {
+    if (searchTerm.trim() === "") {
+      setIsSearching(false);
+      getMovies(); // Si el campo de búsqueda está vacío, vuelve a las películas top-rated
+      return;
+    }
+
+    try {
+      setIsSearching(true); // Indicamos que estamos buscando
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/search/movie`,
+        {
+          params: {
+            api_key: import.meta.env.VITE_API_KEY,
+            query: searchTerm, // El término de búsqueda
+            page: 1,
+          },
+        }
+      );
+      setMovies(response.data.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    searchMovies(); // Buscar películas cada vez que cambia el término de búsqueda
+    
+  }, [searchTerm]);
+
+  useEffect(() => {
+    searchGenre(selectGenre)
+  }, [selectGenre])
+
+  const searchGenre = async(genreId) => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/discover/movie`, {
         params: {
           api_key: import.meta.env.VITE_API_KEY,
-          // page: 1 // cambiar el número de la página para obtener más resultados
-        }
+          with_genres: genreId,  // Filtrar por género
+        },
       });
-      console.log(response.data.results)
-      setMovies(response.data.results)
+      setMovies(response.data.results);
     } catch (error) {
       console.log(error)
     }
   }
 
+
   return (
-    <div id="homepage">Homepage
-      <Searchbar searchTerm={searchTerm} handleSearchTermChange={setSearchTerm}/>
-  
-      {allMovies === undefined ? (<h3>...Cargando</h3>) :
-        allMovies
-        .filter((eachMovie) =>
-          eachMovie.title.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        .map((eachMovie) => {
+    <div id="homepage">
+      Homepage
+      <Searchbar searchTerm={searchTerm} handleSearchTermChange={setSearchTerm} genre= {genre} setSelectGenre={setSelectGenre}/>
+
+      {allMovies === undefined ? (
+        <h3>...Cargando</h3>
+      ) : allMovies.length === 0 ? (
+        <h3>No results found for "{searchTerm}"</h3>
+      ) : (
+        allMovies.map((eachMovie) => {
+          // Mapear los genre_ids a los nombres de los géneros
+          const movieGenres = eachMovie.genre_ids.map(genreId => {
+            const foundGenre = genre.genres?.find(g => g.id === genreId);
+            return foundGenre ? foundGenre.name : 'Unknown';
+          });
+
+
           return (
             <Link to={`/movie/${eachMovie.id}`} key={eachMovie.id}>
-              <div  id="movie-card">
+              <div id="movie-card">
                 <h1>{eachMovie.title}</h1>
-                <img src={`https://image.tmdb.org/t/p/w500${eachMovie.backdrop_path}`} alt={eachMovie.title} />
-              
+                
+                <img src={`https://image.tmdb.org/t/p/w500${eachMovie.backdrop_path}`} alt={eachMovie.title}/>
+                <h3>{eachMovie.release_date.substring(0, 4)}</h3>
+                <span>{movieGenres.join(", ")}</span>
                 <p>{eachMovie.overview}</p>
               </div>
             </Link>
-          )
-      })}
+          );
+        })
+      )}
     </div>
-  )
+  );
 }
 
-export default Homepage
+export default Homepage;
