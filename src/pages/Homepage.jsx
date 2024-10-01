@@ -3,6 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Searchbar from "../components/Searchbar";
 
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+
 function Homepage() {
   const [allMovies, setMovies] = useState();
   const [searchTerm, setSearchTerm] = useState("");
@@ -97,10 +100,9 @@ function Homepage() {
 
 
   return (
-    <div id="homepage">
-      Homepage
+    <>
       <Searchbar searchTerm={searchTerm} handleSearchTermChange={setSearchTerm} genre= {genre} setSelectGenre={setSelectGenre}/>
-
+      <div id="homepage">
       {allMovies === undefined ? (
         <h3>...Cargando</h3>
       ) : allMovies.length === 0 ? (
@@ -116,19 +118,22 @@ function Homepage() {
 
           return (
             <Link to={`/movie/${eachMovie.id}`} key={eachMovie.id}>
-              <div id="movie-card">
-                <h1>{eachMovie.title}</h1>
-                
-                <img src={`https://image.tmdb.org/t/p/w500${eachMovie.backdrop_path}`} alt={eachMovie.title}/>
-                <h3>{eachMovie.release_date.substring(0, 4)}</h3>
-                <span>{movieGenres.join(", ")}</span>
-                <p>{eachMovie.overview}</p>
-              </div>
+              <Card style={{ width: '18rem' }} id="movie-card">
+                <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w500${eachMovie.backdrop_path}`} alt={eachMovie.title}/>
+                <Card.Body>
+                  <Card.Title>{eachMovie.title}</Card.Title>
+                  <h5 id="release-date">{eachMovie.release_date.substring(0, 4)}</h5>
+                  <span className="genres">{movieGenres.join(", ")}</span>
+                  <Card.Text  className="card-text">{eachMovie.overview}</Card.Text>
+
+                </Card.Body>
+              </Card>
             </Link>
           );
         })
       )}
     </div>
+    </>
   );
 }
 

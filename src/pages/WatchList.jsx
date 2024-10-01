@@ -1,4 +1,4 @@
-import { useState, useEffect, useParams } from "react"
+import { useState, useEffect} from "react"
 import FormAddComment from '../components/FormAddComment'
 import axios from "axios"
 
@@ -7,9 +7,7 @@ function WatchList() {
 
   const [userRating, setUserRating] = useState(0); //  el rating que da el usuario
   const [stars, setStars] = useState([]); // para almacenar las estrellas
-  const {movieId} = useParams()
-
-  console.log(stars)
+  
   
   useEffect(()=>{
     getWatchList()

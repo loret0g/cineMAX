@@ -2,17 +2,13 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 
-
 function MovieDetails() {
   const [movie, setMovie] = useState ()
 
   const params = useParams()
 
   useEffect (() => {
-    
     getMovie()
-    renderStars();
-
   }, [])
 
   const getMovie = async () => {
@@ -59,35 +55,30 @@ function MovieDetails() {
   }
 
   return (
-    <>
-    <div>MovieDetails</div>
-
     <div>
       {
         movie===undefined ? (
           <h3>...Cargando</h3>
          ) : (
-        <div> 
+        <div className="detail-card"> 
           <img src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`} alt={movie.imagen} />
           <br></br>
           <button onClick={handleAdd}>Agregar a WatchList</button>
-          <h2>{movie.genres.map((eachMovie, index)=>{
-            return (
-              <span key={index}>{eachMovie.name}</span>
-            )
-          })}</h2>
+          <div className="genre-cnt">
+            {movie.genres.map((eachMovie, index)=>{
+              return (
+                <span key={index}>{eachMovie.name}</span>
+              )
+            })}
+          </div>
           <h1>{movie.title}</h1>
           <p>{movie.overview}</p>
           <h2>{movie.vote_average}</h2>
 
-          
-          
         </div>
         )
       }
-
     </div>
-    </>
   )
 }
 
