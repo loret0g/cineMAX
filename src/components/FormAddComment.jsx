@@ -12,7 +12,7 @@ export default function FormAddComment(props) {
   const handleAddComment = async (e) => {
     e.preventDefault();
       try {
-        await axios.patch(`${VITE_SERVER_URL}/movies/${movieId}`, {"comment": newComment})
+        await axios.patch(`${import.meta.env.VITE_SERVER_URL}/movies/${movieId}`, {"comment": newComment})
 
         getWatchList()
         setNewComment("");

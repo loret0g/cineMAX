@@ -16,7 +16,7 @@ function WatchList() {
 
   const getWatchList = async () =>{
     try {
-      const response = await axios.get(`${VITE_SERVER_URL}/movies`)
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/movies`)
       setAddedMovie(response.data)
       
     } catch (error) {
@@ -28,7 +28,7 @@ function WatchList() {
   const handleAddWatched = async(movieId, movieWatched) => {
     try {
       const updatedWatchedStatus = !movieWatched
-      await axios.patch(`${VITE_SERVER_URL}/movies/${movieId}`, {watched: updatedWatchedStatus})
+      await axios.patch(`${import.meta.env.VITE_SERVER_URL}/movies/${movieId}`, {watched: updatedWatchedStatus})
       getWatchList()
     } catch (error) {
       console.log(error)
@@ -38,7 +38,7 @@ function WatchList() {
   const handleAddFav = async(movieId, movieFav) => {
     try {
       const updatedFavStatus = !movieFav
-      await axios.patch(`${VITE_SERVER_URL}/movies/${movieId}`, {liked: updatedFavStatus})
+      await axios.patch(`${import.meta.env.VITE_SERVER_URL}/movies/${movieId}`, {liked: updatedFavStatus})
       getWatchList()
     } catch (error) {
       console.log(error)
@@ -48,7 +48,7 @@ function WatchList() {
   const handleDeleteWatchList = async(movieId) => {
 
     try {
-      const responseDelete = await axios.delete(`${VITE_SERVER_URL}/movies/${movieId}`)
+      const responseDelete = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/movies/${movieId}`)
       getWatchList()
     } catch (error) {
       console.log(error)
@@ -88,7 +88,7 @@ function WatchList() {
   const updateRatingInDatabase = async (rating) => {
     try {
       const response = await axios.patch(
-        `${VITE_SERVER_URL}/movies/${movieId}`,
+        `${import.meta.env.VITE_SERVER_URL}/movies/${movieId}`,
         { rating }
       );
     } catch (error) {

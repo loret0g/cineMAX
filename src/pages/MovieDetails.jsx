@@ -47,7 +47,7 @@ function MovieDetails() {
 
   const createMovie = async(movieData) => {
     try {
-      const response = axios.post(`${VITE_SERVER_URL}/movies`, movieData)
+      const response = axios.post(`${import.meta.env.VITE_SERVER_URL}/movies`, movieData)
       console.log(response)
     } catch (error) {
       console.log(error)
