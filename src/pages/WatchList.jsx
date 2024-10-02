@@ -16,7 +16,7 @@ function WatchList() {
 
   const getWatchList = async () =>{
     try {
-      const response = await axios.get("http://localhost:5005/movies")
+      const response = await axios.get(`${VITE_SERVER_URL}/movies`)
       setAddedMovie(response.data)
       
     } catch (error) {
@@ -28,7 +28,7 @@ function WatchList() {
   const handleAddWatched = async(movieId, movieWatched) => {
     try {
       const updatedWatchedStatus = !movieWatched
-      await axios.patch(`http://localhost:5005/movies/${movieId}`, {watched: updatedWatchedStatus})
+      await axios.patch(`${VITE_SERVER_URL}/movies/${movieId}`, {watched: updatedWatchedStatus})
       getWatchList()
     } catch (error) {
       console.log(error)
@@ -38,7 +38,17 @@ function WatchList() {
   const handleAddFav = async(movieId, movieFav) => {
     try {
       const updatedFavStatus = !movieFav
-      await axios.patch(`http://localhost:5005/movies/${movieId}`, {liked: updatedFavStatus})
+      await axios.patch(`${VITE_SERVER_URL}/movies/${movieId}`, {liked: updatedFavStatus})
+      getWatchList()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleDeleteWatchList = async(movieId) => {
+
+    try {
+      const responseDelete = await axios.delete(`${VITE_SERVER_URL}/movies/${movieId}`)
       getWatchList()
     } catch (error) {
       console.log(error)
@@ -78,7 +88,7 @@ function WatchList() {
   const updateRatingInDatabase = async (rating) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5005/movies/${movieId}`,
+        `${VITE_SERVER_URL}/movies/${movieId}`,
         { rating }
       );
     } catch (error) {
@@ -98,6 +108,7 @@ function WatchList() {
           <br />
           <button onClick={() => handleAddFav(eachMovie.id, eachMovie.liked)}>{eachMovie.liked ? "me gusta" : "agregar a me gusta"}</button>
           <button onClick={() => handleAddWatched(eachMovie.id, eachMovie.watched)}>{eachMovie.watched ? "ICONO VISTO" : "ICONO NO VISTO"}</button>
+          <button onClick={() => handleDeleteWatchList(eachMovie.id)}>Delete from WatchList</button>
           
           {/* Rating */}
           <div>

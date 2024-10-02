@@ -13,7 +13,7 @@ function MovieDetails() {
 
   const getMovie = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/movie/${params.movieId}`, {
+      const response = await axios.get(`${import.meta.env.VITE_EXTERNAL_API_URL}/movie/${params.movieId}`, {
         params: {
           api_key: import.meta.env.VITE_API_KEY,
         }
@@ -47,7 +47,7 @@ function MovieDetails() {
 
   const createMovie = async(movieData) => {
     try {
-      const response = axios.post("http://localhost:5005/movies", movieData)
+      const response = axios.post(`${VITE_SERVER_URL}/movies`, movieData)
       console.log(response)
     } catch (error) {
       console.log(error)

@@ -22,7 +22,7 @@ function Homepage() {
   const getMovies = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/movie/top_rated`,
+        `${import.meta.env.VITE_EXTERNAL_API_URL}/movie/top_rated`,
         {
           params: {
             api_key: import.meta.env.VITE_API_KEY,
@@ -38,7 +38,7 @@ function Homepage() {
 
   const getGenre = async() => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/genre/movie/list`,
+      const response = await axios.get(`${import.meta.env.VITE_EXTERNAL_API_URL}/genre/movie/list`,
         {
           params: {
             api_key: import.meta.env.VITE_API_KEY,
@@ -60,7 +60,7 @@ function Homepage() {
     try {
       setIsSearching(true); // Indicamos que estamos buscando
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/search/movie`,
+        `${import.meta.env.VITE_EXTERNAL_API_URL}/search/movie`,
         {
           params: {
             api_key: import.meta.env.VITE_API_KEY,
@@ -86,7 +86,7 @@ function Homepage() {
 
   const searchGenre = async(genreId) => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/discover/movie`, {
+      const response = await axios.get(`${import.meta.env.VITE_EXTERNAL_API_URL}/discover/movie`, {
         params: {
           api_key: import.meta.env.VITE_API_KEY,
           with_genres: genreId,  // Filtrar por género
