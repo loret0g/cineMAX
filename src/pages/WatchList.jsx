@@ -1,6 +1,11 @@
 import { useState, useEffect} from "react"
 import FormAddComment from '../components/FormAddComment'
 import axios from "axios"
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+
+import SyncLoader from "react-spinners/SyncLoader";
+
 
 function WatchList() {
   const [addedMovie, setAddedMovie] = useState()
@@ -98,28 +103,38 @@ function WatchList() {
 
   
   return (
-    <div>
-     {addedMovie === undefined ? (<h3>...Cargando</h3>) : 
+    <div id="watchlist-container">
+     {addedMovie === undefined ? (<h3><SyncLoader color="#6D36D4" /></h3>) : 
     addedMovie.map((eachMovie, index)=>{
       return (
-        <div key={index}>
+        <div key={index} className="watchlist-card">
           <h1>{eachMovie.title}</h1>
           <img src={`https://image.tmdb.org/t/p/w500${eachMovie.backdrop_path}`} alt="imagen-pelicula" />
           <br />
-          <button onClick={() => handleAddFav(eachMovie.id, eachMovie.liked)}>{eachMovie.liked ? "me gusta" : "agregar a me gusta"}</button>
-          <button onClick={() => handleAddWatched(eachMovie.id, eachMovie.watched)}>{eachMovie.watched ? "ICONO VISTO" : "ICONO NO VISTO"}</button>
-          <button onClick={() => handleDeleteWatchList(eachMovie.id)}>Delete from WatchList</button>
+          <div id="labels-watchlist">
+              <button onClick={() => handleDeleteWatchList(eachMovie.id)}>Delete from WatchList</button>
+            <div className="watchlist-icons">
+              <span onClick={() => handleAddFav(eachMovie.id, eachMovie.liked)}>{eachMovie.liked ? <i className="fas fa-heart" style={{ color: "red", fontSize: "24px" }}></i>  : <i className="far fa-heart" style={{ color: "gray", fontSize: "24px" }}></i>}</span>
+              
+              <span onClick={() => handleAddWatched(eachMovie.id, eachMovie.watched)}>
+                {eachMovie.watched ? (
+                  <i className="fas fa-eye" style={{ color: "green", fontSize: "24px" }}></i>
+                ) : (
+                  <i className="fas fa-eye-slash" style={{ color: "gray", fontSize: "24px" }}></i>
+                )}
+              </span>
+            </div>  
+          </div>
+          
           
           {/* Rating */}
-          <div>
-              <h3>Rate this movie:</h3>
-              
+          <div>              
               <div>{stars}</div>
 
               <p>Your rating: {userRating} / 5</p>
           </div>
           
-          <p>{eachMovie.overview}</p>
+          {/* <p>{eachMovie.overview}</p> */}
           
           <p>Comment:</p>
 

@@ -1,4 +1,13 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 #root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
   text-align: center;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -6,18 +15,13 @@
   -moz-osx-font-smoothing: grayscale;
 
   background-color: #b9d9fa;
+
+  position: relative;
 }
 
 a {
   /* color: black !important; */
   text-decoration: none !important;
-}
-
-#homepage {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);  
-  gap: 4rem;
-  margin: 20px;
 }
 
 nav {
@@ -146,7 +150,6 @@ h3 {
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   border-radius: 8px;
   overflow: hidden;
-  
 }
 
 #movie-card:hover {
@@ -256,7 +259,6 @@ h3 {
   height: auto; 
 }
 
-
 .detail-card button {
   background-color: #f39c12;
   color: white;
@@ -271,7 +273,6 @@ h3 {
 
 .detail-card button:hover {
   background-color: #e67e22;
-
 }
 
 /* Estilos para los géneros */
@@ -285,6 +286,75 @@ h1, h2, p {
   margin: 10px 0; /* Espaciado entre los elementos de texto */
 }
 
+/* Página de watchlist*/
+#watchlist-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  gap: 1rem; /* Espaciado entre tarjetas */
+  margin: 0 auto; /* Centrado horizontal */
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+  max-width: 1200px; /* Limita el ancho máximo del contenedor */
+  padding: 20px;
+  box-sizing: border-box; /* Incluye padding y border en el ancho total */
+}
+
+#labels-watchlist {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos */
+  align-items: center; /* Alinea verticalmente los elementos */
+  padding: 1rem 0; /* Espaciado vertical */
+  width: 100%;
+}
+
+.watchlist-card {
+  /* border: 2px solid red; */
+  background-color: #1c1c1c; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
+  padding: 20px; 
+  width: 100%; /* Ocupa el 100% del espacio dentro de la columna */
+  margin: 0 auto; /* Asegura que las tarjetas estén centradas */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Asegura que las tarjetas tengan la misma altura */
+}
+
+.watchlist-card img {
+  border-radius: 10px; 
+  width: 100%; 
+  height: auto; 
+}
+
+.watchlist-card button {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.watchlist-card button:hover {
+  background-color: #e67e22;
+}
+
+.watchlist-icons {
+  display: flex;
+  justify-content: flex-end; /* Alinea los iconos a la derecha */
+  gap: 1rem; /* Espacio entre los iconos */
+}
+
+.watchlist-icons span {
+  margin-left: 30px;
+}
+
+
+
+/* Página de ABOUT */
 .about-page {
   text-align: center;
   padding: 50px;
@@ -360,12 +430,15 @@ p {
 
 /* FOOTER */
 .footer {
+  /* margin-top: 65vh; */
   background: linear-gradient(90deg, rgba(61, 23, 128, 0.9), rgba(58, 138, 187, 0.9)); /* Colores más oscuros y algo de transparencia */
   padding: 20px 0;
   text-align: center;
   font-size: 1rem;
   box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.4); /* Sombra en el borde superior */
-  position: relative;
+  /* position: absolute;
+  bottom: 0; */
+  width: 100%;
 }
 
 .footer-content {
