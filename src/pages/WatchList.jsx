@@ -48,7 +48,7 @@ function WatchList() {
   const handleDeleteWatchList = async(movieId) => {
 
     try {
-      const responseDelete = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/movies/${movieId}`)
+      await axios.delete(`${import.meta.env.VITE_SERVER_URL}/movies/${movieId}`)
       getWatchList()
     } catch (error) {
       console.log(error)
@@ -120,11 +120,10 @@ function WatchList() {
           </div>
           
           <p>{eachMovie.overview}</p>
-          <p>Comment: {eachMovie.comment}</p>
           
-          
+          <p>Comment:</p>
 
-          <FormAddComment getWatchList={getWatchList} movieId={eachMovie.id}/>
+          <FormAddComment getWatchList={getWatchList} movieId={eachMovie.id} currentComment={eachMovie.comment}/>
           
         </div>
 

@@ -11,13 +11,13 @@ function Homepage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [genre, setGenre] = useState([])        // Saber todos los géneros con llamada a la API
   const [selectGenre, setSelectGenre] = useState()  // Género que selecciona el usuario
-
+  const [page, setPage] = useState(1)
   const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     getMovies();
     getGenre()
-  }, []);
+  }, [page]);
 
   const getMovies = async () => {
     try {
@@ -26,7 +26,7 @@ function Homepage() {
         {
           params: {
             api_key: import.meta.env.VITE_API_KEY,
-            // page: 1 // cambiar el número de la página para obtener más resultados
+            page // cambiar el número de la página para obtener más resultados
           },
         }
       );
@@ -65,7 +65,7 @@ function Homepage() {
           params: {
             api_key: import.meta.env.VITE_API_KEY,
             query: searchTerm, // El término de búsqueda
-            page: 1,
+          
           },
         }
       );
@@ -96,6 +96,13 @@ function Homepage() {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const handleNextPage = () => {
+    setPage(page + 1)
+  }
+  const handlePreviousPage = () => {
+    setPage(page - 1)
   }
 
 
@@ -132,6 +139,8 @@ function Homepage() {
           );
         })
       )}
+      {page > 1 ? <button onClick={handlePreviousPage}>Anterior</button> : null}
+      <button onClick={handleNextPage}>Siguiente</button>
     </div>
     </>
   );
