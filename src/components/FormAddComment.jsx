@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios"
 
+import Accordion from 'react-bootstrap/Accordion';
+import Form from 'react-bootstrap/Form';
+
 export default function FormAddComment(props) {
   const {getWatchList, movieId, currentComment} = props
   const [newComment, setNewComment] = useState(currentComment || "")
@@ -32,28 +35,37 @@ export default function FormAddComment(props) {
 
   const handleEditComment = (e) => {
     e.preventDefault()
-    
+    setIsEditing(false);
   }
    
-  console.log(newComment)
   return (
-    <div>
-      {isEditing ? (
-        <>
-          <label htmlFor="myTextArea">Edit your comment: </label>
-          <textarea
-            id="myTextArea"
-            onChange={handleValueComment}
-            value={newComment}
-          ></textarea>
-          <button onClick={handleComment}>Save Changes</button>
-        </>
-      ) : (
-        <>
-          <p>{newComment ? newComment : 'No comment added yet.'}</p>
-          <button onClick={handleEditClick}>Edit Comment</button>
-        </>
-      )}
-    </div>
+    <Accordion>
+      <Accordion.Item eventKey="0">
+      <Accordion.Header>Show comment</Accordion.Header>
+        <Accordion.Body>
+        {isEditing ? (
+          <>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Edit your comment:</Form.Label>
+            <Form.Control as="textarea" rows={3} 
+              id="myTextArea"
+              onChange={handleValueComment}
+              value={newComment} />
+          </Form.Group>
+          </Form>
+            <button onClick={handleComment}>Save Changes</button>
+          </>
+        ) : (
+          <>
+            <p>{newComment ? newComment : 'No comment added yet.'}</p>
+            <button onClick={handleEditClick}>{newComment ? "Edit Comment" : "Add Comment"}</button>
+          </>
+        )}
+        </Accordion.Body>
+        
+      </Accordion.Item>
+      
+    </Accordion>
   )
 }

@@ -7,6 +7,9 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Toast from "react-bootstrap/Toast";
 
+import SyncLoader from "react-spinners/SyncLoader";
+
+
 function MovieDetails() {
   const [movie, setMovie] = useState();
   const [popUp, setPopUp] = useState(false);
@@ -77,15 +80,15 @@ function MovieDetails() {
       (eachMovie) => eachMovie.title === title
     );
 
-    // if(findMovie){
-    //   setIsInTheWatchList(true)
-    // }
+    if(findMovie){
+      setIsInTheWatchList(true)
+    }
   };
 
   return (
     <div>
       {movie === undefined ? (
-        <h3>...Cargando</h3>
+        <SyncLoader color="#6D36D4" />
       ) : (
         <>
             <Toast
