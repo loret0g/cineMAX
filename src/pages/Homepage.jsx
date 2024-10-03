@@ -158,11 +158,11 @@ function Homepage() {
             );
           })
         )}
+        </div>
         {page > 1 ? (
           <button onClick={handlePreviousPage} className="btn-page">Anterior</button>
         ) : null}
         <button onClick={handleNextPage} className="btn-page">Siguiente</button>
-      </div>
     </>
   );
 }

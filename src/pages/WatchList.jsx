@@ -106,20 +106,24 @@ function WatchList() {
   
   return (
     <>
-  <div >
-    <button onClick={handleFilterFav} className="btn-watchlist-page" >Favorites movies</button>
-    <button onClick={handleFilterWatched} className="btn-watchlist-page">Watched movies</button>
-    <button onClick={handleShowAllMovies} className="btn-watchlist-page">My WatchList</button>
+  <div id="nav-watchlist">
+    <h4>Customize your list</h4>
+    <div id="nav-btn-watchlist">
+      <button onClick={handleFilterFav} className="btn-watchlist-page" >Favorites movies</button>
+      <button onClick={handleFilterWatched} className="btn-watchlist-page">Watched movies</button>
+      <button onClick={handleShowAllMovies} className="btn-watchlist-page">My WatchList</button>
+    </div>
   </div>
+  <hr id="nav-hr" />
 
   <div id="watchlist-container">
     {/* Condicional: Si no hay películas, muestra la imagen */}
     {filteredMovies && filteredMovies.length === 0 ? (
       <>
-      <img src={noData} alt="No movies available" /> 
       <div id="no-data-found">
         <h2>Where are yours movies?</h2>
         <h2>You should add here some of them</h2>
+        <img src={noData} alt="No movies available" /> 
       </div>
       </>
     ) : (
@@ -136,7 +140,7 @@ function WatchList() {
             />
             <br />
             <div id="labels-watchlist">
-              <button onClick={() => handleDeleteWatchList(eachMovie.id)}>
+              <button id="btn-delete-watchlist" onClick={() => handleDeleteWatchList(eachMovie.id)}>
                 Delete from WatchList
               </button>
               <div className="watchlist-icons">
@@ -183,8 +187,6 @@ function WatchList() {
               <div>{renderStars(eachMovie.id, eachMovie.rating)}</div>
               <p>Your rating: {eachMovie.rating} / 5</p>
             </div>
-
-            <p>Comment:</p>
 
             <FormAddComment
               getWatchList={getWatchList}

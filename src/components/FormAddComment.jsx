@@ -39,10 +39,10 @@ export default function FormAddComment(props) {
   }
    
   return (
-    <Accordion>
+    <Accordion style={{backgroundColor: "#red !important"}}>
       <Accordion.Item eventKey="0">
-      <Accordion.Header>Show comment</Accordion.Header>
-        <Accordion.Body>
+      <Accordion.Header  >Show comment</Accordion.Header>
+        <Accordion.Body  style={{backgroundColor: "#abc"}}>
         {isEditing ? (
           <>
           <Form>
