@@ -1,6 +1,5 @@
 #root {
   background-color: #445566;
-
   text-align: center;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,17 +12,17 @@ a {
 }
 
 /** NAV */
-nav {
+.my-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: rgb(36, 36, 36);
-  height: 2rem;
-  padding: 4rem 3rem;
+  height: auto;
+  padding: 1rem 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-nav img {
+.my-nav img {
   height: 6rem;
 }
 
@@ -33,18 +32,25 @@ nav img {
   color: white; 
   border-radius: 5px;
   font-size: 14px;
+  border: 2px solid transparent;
 }
 
-@media (min-width:500px) {
+.navbar-toggle {
+  color: #f39c12 !important;
+  background-color: #445566 !important;
+}
+
+@media (min-width: 500px) {
   .nav-links h3 {
     font-size: 24px;
   }
 }
 
 .active-link h3, .nav-links h3:hover {
-  background-color: rgba(255, 255, 255, 0.1); 
-  border: 2px solid #f39c12;
+  background-color: rgba(255, 255, 255, 0.1) !important; 
+  border: 2px solid #f39c12 !important;
 }
+
 
 
 
@@ -102,7 +108,7 @@ nav img {
 #homepage {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around; 
+  justify-content: center;
   gap: 4rem;
   margin: 0.8rem;
   padding: 10px;
@@ -111,14 +117,69 @@ nav img {
 .carousel-cnt {
   margin: 2rem auto;
   max-width: 1000px;
+  position: relative;
 }
+
+#coming-soon {
+  position: absolute;
+  z-index: 100;
+  background-color: #1c1c1c;
+  top: 40px;
+  left: 40px;
+  padding: 16px 40px;
+  border-radius: 4px;
+  border: 1px solid #f39c12;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(243, 156, 18, 0.8); /* Sombra sutil naranja */
+  animation: flicker 3s infinite; /* Efecto de destello */
+}
+
+#coming-soon p {
+  margin: 0 auto;
+  font-size: 24px;
+  text-transform: uppercase;
+  color: #f39c12;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+}
+
+#coming-soon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 70%);
+  animation: slide 2s infinite;
+  z-index: 1;
+}
+
+@keyframes slide {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
 
 .d-block {
   border-radius: 12px;
   height: 100%;
   object-fit: cover;
 }
-
 
 #movie-card {
   flex: 1 1 500px;
@@ -129,7 +190,6 @@ nav img {
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   border-radius: 8px;
   overflow: hidden;
-  
 }
 
 #movie-card:hover {
@@ -143,13 +203,6 @@ nav img {
   object-fit: cover;
 }
 
-#release-date {
-  padding: 2px 6px;
-  background-color: #e69f4e;
-  border-radius: 4px;
-}
-
-/******************** REVISAR ESTO ******************************/
 .card-body {
   display: flex;
   flex-direction: column;
@@ -159,11 +212,17 @@ nav img {
 .card-title {
   font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
   max-height: 2.6rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; /* Limitar el título a una línea */
+  white-space: nowrap;
+}
+
+#release-date {
+  padding: 2px 6px;
+  background-color: #e69f4e;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 .genres {
@@ -172,7 +231,11 @@ nav img {
   max-height: 1.8rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; /* Limitar los géneros a una línea */
+  white-space: nowrap;
+  background-color: #445566;
+  color: #abc;
+  border-radius: 4px;
+  padding: 0 10px;
 }
 
 .card-text {
@@ -180,24 +243,21 @@ nav img {
   font-size: 0.9rem;
   line-height: 1.4;
   overflow: hidden;
-  text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 4; /* Mostrar solo 4 líneas de descripción */
   -webkit-box-orient: vertical;
 }
 
-h3 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
 .btn-page {
   background-color: rgba(36, 36, 36, 0.7); 
-  border: 3px solid #f39c12;
+  color: white;
+  border: 2.5px solid #f39c12;
   padding: 10px 15px; 
-  color: white; 
   border-radius: 10px;
   margin-right: 5rem;
+}
+.btn-page:hover {
+  background-color: rgba(36, 36, 36, 0.4); 
 }
 
 /** DETAILS-MOVIE*/
@@ -214,11 +274,9 @@ h3 {
   color: white; 
 }
 
-
 .detail-card img {
   border-radius: 10px; 
   width: 100%; 
-  height: auto; 
 }
 
 .detail-card button {
@@ -227,39 +285,30 @@ h3 {
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s, transform 0.3s;
+  font-size: 1rem;
+  transition: background-color 0.3s;
 }
-
-
 .detail-card button:hover {
   background-color: #e67e22;
 }
 
-/* Estilos para los géneros */
 .genre-cnt {
   margin: 10px;
+  color: #445566;
 }
 
-/* Estilos para los títulos y descripciones */
-h1, h2, p {
-  text-align: center; 
-  margin: 10px 0; 
+.detail-card h1 {
+  font-size: 2rem;
+}
+
+.detail-card p {
+  text-align: justify;
+  margin: 1rem;
 }
 
 /** Página de watchlist*/
-
-#no-data-found {
-  /* background-color: #005f87; */
-  padding: 20px;
-  height: fit-content;
-  border-radius: 12px;
-  margin: 0 auto;
-}
-
 #nav-watchlist {
-  margin-top: 20px;
+  margin: 20px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -275,6 +324,14 @@ h1, h2, p {
   margin: 0 auto;
   width: 80%; 
   margin-bottom: 3rem;
+}
+
+#no-data-found {
+  margin: 0 auto;
+}
+
+#no-data-found img {
+  width: 100%;
 }
 
 .btn-watchlist-page {

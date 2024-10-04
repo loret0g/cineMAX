@@ -74,7 +74,7 @@ function WatchList() {
       starElements.push(
         <span
           key={i}
-          onClick={() => handleRatingClick(movieId, i)} // Establece el rating cuando haces clic en la estrella
+          onClick={() => handleRatingClick(movieId, i)}
           style={{
             color: movieRating >= i ? "gold" : "gray",
             cursor: "pointer",
@@ -91,7 +91,6 @@ function WatchList() {
 
   const handleFilterFav = () => {
     const favMovies = addedMovie.filter((eachMovie) => eachMovie.liked);
-    console.log(favMovies)
     setFilteredMovies(favMovies);
   }
 
@@ -107,11 +106,11 @@ function WatchList() {
   return (
     <>
   <div id="nav-watchlist">
-    <h4>Customize your list</h4>
-    <div id="nav-btn-watchlist">
+    <h4>Customize your WatchList</h4>
+    <div id="cnt-btn-watchlist">
       <button onClick={handleFilterFav} className="btn-watchlist-page" >Favorites movies</button>
       <button onClick={handleFilterWatched} className="btn-watchlist-page">Watched movies</button>
-      <button onClick={handleShowAllMovies} className="btn-watchlist-page">My WatchList</button>
+      <button onClick={handleShowAllMovies} className="btn-watchlist-page">All movies</button>
     </div>
   </div>
   <hr id="nav-hr" />

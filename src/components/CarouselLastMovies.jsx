@@ -32,9 +32,10 @@ function CarouselLastMovies() {
     }
   return (
     <div className='carousel-cnt'>
+      <div id='coming-soon'><p>Coming soon</p></div>
     <Carousel>
       {lastMovies.map((eachLastMovie) => (
-        <Carousel.Item key={eachLastMovie.id} interval={3000}>
+        <Carousel.Item key={eachLastMovie.id} interval={3000} id="cnt-carousel">
           <img
             className="d-block w-100"
             src={`https://image.tmdb.org/t/p/w500${eachLastMovie.backdrop_path}`}

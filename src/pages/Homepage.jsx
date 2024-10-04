@@ -113,7 +113,6 @@ function Homepage() {
 
   return (
     <>
-      
       <CarouselLastMovies />
       <Searchbar
         searchTerm={searchTerm}
@@ -124,7 +123,7 @@ function Homepage() {
       <div id="homepage">
 
         {allMovies === undefined ? (
-          <SyncLoader color="#6D36D4" />
+          <h3><SyncLoader color="#6D36D4"/></h3>
         ) : allMovies.length === 0 ? (
           <h3>No results found for "{searchTerm}"</h3>
         ) : (

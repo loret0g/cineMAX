@@ -33,7 +33,6 @@ function MovieDetails() {
       );
       setMovie(response.data);
       checkMovie(response.data.title);
-      console.log(response.data.title);
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +64,6 @@ function MovieDetails() {
         `${import.meta.env.VITE_SERVER_URL}/movies`,
         movieData
       );
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -130,12 +128,12 @@ function MovieDetails() {
 
             <div className="genre-cnt">
               {movie.genres.map((eachMovie, index) => {
-                return <span key={index}>{eachMovie.name}</span>;
+                return <span key={index}>{eachMovie.name} </span>;
               })}
             </div>
             <h1>{movie.title}</h1>
             <p>{movie.overview}</p>
-            <h2>{movie.vote_average}</h2>
+            <h3>Rating: {movie.vote_average}</h3>
           </div>
         </>
       )}
