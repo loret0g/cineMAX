@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import Carousel from 'react-bootstrap/Carousel';
-// import ExampleCarouselImage from 'components/ExampleCarouselImage';
 
 function CarouselLastMovies() {
     const [lastMovies, setLastMovies] = useState([])
@@ -40,7 +39,7 @@ function CarouselLastMovies() {
             className="d-block w-100"
             src={`https://image.tmdb.org/t/p/w500${eachLastMovie.backdrop_path}`}
             alt={eachLastMovie.title}
-            style={{ height: '500px'}} // Ajusta la altura y el ajuste de la imagen
+            style={{ height: '500px'}}
           />
           <Carousel.Caption>
             <h3>{eachLastMovie.title}</h3>

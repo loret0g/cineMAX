@@ -69,7 +69,7 @@ function MovieDetails() {
     }
   };
 
-  // CREAR A LA PETICIÓN A NUESTRA BDD PARA SABER SI EXISTE
+  // CREAR LA PETICIÓN A NUESTRA BDD PARA SABER SI EXISTE
   const checkMovie = async (title) => {
     const response = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/movies`

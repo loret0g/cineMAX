@@ -23,7 +23,6 @@ export default function FormAddComment(props) {
         await axios.patch(`${import.meta.env.VITE_SERVER_URL}/movies/${movieId}`, {"comment": newComment})
         getWatchList()
         setIsEditing(false);
-        // setNewComment("");
       } catch (error) {
         console.log(error)
       }
@@ -32,11 +31,6 @@ export default function FormAddComment(props) {
   const handleEditClick = () => {
     setIsEditing(true); // Activa el modo de edición
   };
-
-  const handleEditComment = (e) => {
-    e.preventDefault()
-    setIsEditing(false);
-  }
    
   return (
     <Accordion style={{backgroundColor: "#red !important"}}>
